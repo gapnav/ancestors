@@ -7,13 +7,27 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 function dataToNodes(data){
   let flat_nodes = [];
-  let nodes = data.parents.map(p => personToNode(p, flat_nodes, 1));
+  let nodes = data.parents.map(p => personToNode(p, flat_nodes, 2));
   let max_level = Math.max.apply(null, flat_nodes.map(n => n.value));
-  flat_nodes.forEach(node => {
-    node.value = max_level + 3 - node.value;
 
-    let h = Math.floor(256 / max_level) * node.value;
-    node.color = hslToColor(h,50,50);
+  let core_children = data.core_children.map(p => {
+    let node = personToNode(p, flat_nodes, 1);
+    return node;
+  })
+
+  // set ID for core children to link them with first level of parents
+  core_children.forEach((node, i) => node.id = i );
+
+  // set links
+  nodes.forEach(node => node.link = core_children.map(node => node.id))
+
+  nodes = nodes.concat(core_children);
+
+  flat_nodes.forEach(node => {
+    node.value = max_level - node.value;
+    // node.color = nodeColorByLevel(node, max_level);
+    node.color = nodeColorBySex(node, max_level);
+    node.value += 3;
   });
 
   return nodes;
@@ -22,6 +36,7 @@ function dataToNodes(data){
 function personToNode(person, flat_nodes, level){
   let node = {
     name: person.name + "\n" + person.birth_date,
+    sex: person.sex,
     value: level
   }
   if (!!person.parents){
@@ -30,6 +45,20 @@ function personToNode(person, flat_nodes, level){
 
   flat_nodes.push(node)
   return node;
+}
+
+function nodeColorByLevel(node, max_level){
+  let h = Math.floor(256 / max_level) * node.value;
+  return hslToColor(h, 50, 50);
+}
+
+function nodeColorBySex(node, max_level){
+  let h = node.sex === 'female' ? 300 : 240;
+  let s_max = 100;
+  let s_min = 30;
+  let s = Math.floor((s_max - s_min) / max_level) * node.value + s_min;
+
+  return hslToColor(h, s, 50);
 }
 
 function hslToColor(h,s,l){

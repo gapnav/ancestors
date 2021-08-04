@@ -10,6 +10,8 @@ var forceDirectedTree = function(data){
 
   chart.data = data;
 
+  networkSeries.dataFields.id = "id";
+  networkSeries.dataFields.linkWith = "link";
   networkSeries.dataFields.value = "value";
   networkSeries.dataFields.name = "name";
   networkSeries.dataFields.color = "color";
@@ -20,10 +22,11 @@ var forceDirectedTree = function(data){
   networkSeries.nodes.template.label.text = "{name}"
   networkSeries.fontSize = 10;
 
-  networkSeries.links.template.strokeWidth = 1;
+  networkSeries.links.template.strokeWidth = 3;
+  networkSeries.links.template.strokeOpacity = 0.8;
 
   var hoverState = networkSeries.links.template.states.create("hover");
-  hoverState.properties.strokeWidth = 3;
+  hoverState.properties.strokeWidth = 5;
   hoverState.properties.strokeOpacity = 1;
 
   networkSeries.nodes.template.events.on("over", function(event) {
