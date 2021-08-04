@@ -82,7 +82,7 @@ let sample_ancestors = {
     {
       name: 'My Awesome Wife',
       birth_date: '1990-03-02',
-      sex: 'male',
+      sex: 'female',
       place_of_birth: 'City of Eagles',
       places: ['City of Eagles', 'Happy Land'],
       craft: 'Housewife',

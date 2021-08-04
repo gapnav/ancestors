@@ -12,6 +12,7 @@ var forceDirectedTree = function(data){
 
   networkSeries.dataFields.value = "value";
   networkSeries.dataFields.name = "name";
+  networkSeries.dataFields.color = "color";
   networkSeries.dataFields.children = "children";
   networkSeries.nodes.template.tooltipText = "{name}:{value}";
   networkSeries.nodes.template.fillOpacity = 1;
