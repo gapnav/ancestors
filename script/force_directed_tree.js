@@ -20,7 +20,7 @@ var forceDirectedTree = function(data){
   networkSeries.nodes.template.fillOpacity = 1;
 
   networkSeries.nodes.template.label.text = "{name}"
-  networkSeries.fontSize = 10;
+  networkSeries.fontSize = 12;
 
   networkSeries.links.template.strokeWidth = 3;
   networkSeries.links.template.strokeOpacity = 0.8;

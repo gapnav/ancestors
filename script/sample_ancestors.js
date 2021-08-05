@@ -1,4 +1,4 @@
-let sample_ancestors = {
+ancestors = {
   core_children: [
     {
       name: 'My Awesome Son',

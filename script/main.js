@@ -1,7 +1,7 @@
+let ancestors = {};
+
 document.addEventListener("DOMContentLoaded", function(event) {
-  let d = sample_ancestors;
-  // if (typeof data !== 'undefined') d = data;
-  let nodes = dataToNodes(d);
+  let nodes = dataToNodes(ancestors);
   forceDirectedTree(nodes);
 });
 
@@ -27,15 +27,17 @@ function dataToNodes(data){
     node.value = max_level - node.value;
     // node.color = nodeColorByLevel(node, max_level);
     node.color = nodeColorBySex(node, max_level);
-    node.value += 3;
+    node.value += 5;
   });
 
   return nodes;
 }
 
 function personToNode(person, flat_nodes, level){
+  // reverse is used to force last row to have more words than first row (when not equal)
+  let wrapped_name = person.name.split(/\s+/).reverse().chunks(2).reverse().map(x => x.reverse()).map(chunk => chunk.join(' ')).join("\n")
   let node = {
-    name: person.name + "\n" + person.birth_date,
+    name: wrapped_name + "\n" + person.birth_date,
     sex: person.sex,
     value: level,
     tooltip: nodeTooltip(person)
@@ -91,3 +93,14 @@ function humanize(str, titleize=false) {
     return m.toUpperCase();
   });
 }
+
+Array.prototype.chunks = function(chunk_size){
+  if (!chunk_size || chunk_size < 2) throw 'chunk_size should be 2 or greater';
+
+  let result = [];
+  this.forEach(x => {
+    if (!result.length || result[result.length - 1].length >= chunk_size) result.push([]);
+    result[result.length - 1].push(x);
+  });
+  return result;
+};
