@@ -37,14 +37,24 @@ function personToNode(person, flat_nodes, level){
   let node = {
     name: person.name + "\n" + person.birth_date,
     sex: person.sex,
-    value: level
+    value: level,
+    tooltip: nodeTooltip(person)
   }
+
   if (!!person.parents){
     node.children = person.parents.map(p => personToNode(p, flat_nodes, level+1));
   }
 
   flat_nodes.push(node)
   return node;
+}
+
+function nodeTooltip(person){
+  return Object.keys(person).filter(k => !['parents', 'sex'].includes(k)).map(key => {
+    let value = person[key];
+    if (value instanceof Array) value = value.join('; ');
+    return humanize(key) + ': ' + value;
+  }).join("\n");
 }
 
 function nodeColorByLevel(node, max_level){
@@ -71,4 +81,13 @@ function hslToColor(h,s,l){
     return h;
   });
   return '#' + hex.join('');
+}
+
+function humanize(str, titleize=false) {
+  var upcase_pattern = (!!titleize) ? /^.|\s./g : /^./;
+  return str.trim().split(/\s+/).map(function(str) {
+    return str.replace(/_/g, ' ').replace(/\s+/, ' ').trim();
+  }).join(' ').toLowerCase().replace(upcase_pattern, function(m) {
+    return m.toUpperCase();
+  });
 }
