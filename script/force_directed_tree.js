@@ -19,11 +19,15 @@ var forceDirectedTree = function(data){
   networkSeries.nodes.template.tooltipText = "{tooltip}";
   networkSeries.nodes.template.fillOpacity = 1;
 
+  networkSeries.minRadius = 70;
+  networkSeries.maxRadius = 100;
+
   networkSeries.nodes.template.label.text = "{name}"
   networkSeries.fontSize = 12;
 
   networkSeries.links.template.strokeWidth = 3;
   networkSeries.links.template.strokeOpacity = 0.8;
+  // networkSeries.links.template.distance = 2;
 
   var hoverState = networkSeries.links.template.states.create("hover");
   hoverState.properties.strokeWidth = 5;

@@ -27,7 +27,7 @@ function dataToNodes(data){
     node.value = max_level - node.value;
     // node.color = nodeColorByLevel(node, max_level);
     node.color = nodeColorBySex(node, max_level);
-    node.value += 5;
+    // node.value += 5;
   });
 
   return nodes;
